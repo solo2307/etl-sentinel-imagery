@@ -1,0 +1,32 @@
+hydra:
+  run:
+    dir: ./outputs/${hydra.job.name}/${now:%Y-%m-%d_%H-%M-%S}
+
+# Local Storage
+cache:
+  feature_dir: cache/s2
+
+# Dataset configuration
+data:
+  aoi: data/toulouse_bbox_wgs84.geojson
+  crs: epsg:4326
+  global_dataset: data/global_s2_tiles.csv
+  tile_ids: []
+
+# CopernicusHub credentials and Sentinel imagery configurations
+imagery:
+  # CopernicusHub API credentials
+  api_url: ${oc.env:COPERNICUSHUB_API_URL}
+  api_id: ${oc.env:COPERNICUSHUB_API_ID}
+  api_secret: ${oc.env:COPERNICUSHUB_API_SECRET}
+
+  # Image acquisition and preprocessing descriptor name.
+  start_date: 2023-05-01
+  end_date: 2023-09-05
+  platform_name: SENTINEL-2
+  processing_level: Level-2A
+  product_type: S2MSI2A
+  cloud_coverage_max: 4.0
+  resolution: 10.0
+  bands: [ 'B02', 'B03', 'B04', 'B08' ]
+  format: UINT8
